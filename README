@@ -1,0 +1,31 @@
+### Docker Setup
+
+---
+### Local Setup
+install conda
+
+Create conda environment: 
+`conda create --name *insert_name* python=3.10`
+
+Activate created environment:
+`conda activate *insert_name*`
+
+Install ultralytics for yolov8 training:
+`pip install ultralytics`
+
+Train yolov8 model via Python or Console:
+
+#### Python
+Use the train.py file
+
+#### Console
+yolo detect train data=yolov8_config.yaml model="yolov8n.pt" epochs=1
+
+if things go bad use:
+`pip uninstall -y -r <(pip freeze)`
+
+
+Tried out to
+[install LabelStudio locally conda:](https://github.com/HumanSignal/label-studio?tab=readme-ov-file#install-locally-with-anaconda)
+didn't quite work out...
+
