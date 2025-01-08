@@ -2,7 +2,8 @@
 
 ---
 ### Local Setup
-install conda
+
+#### Install conda and dependencies
 
 Create conda environment: 
 `conda create --name *insert_name* python=3.10`
@@ -13,7 +14,15 @@ Activate created environment:
 Install ultralytics for yolov8 training:
 `pip install ultralytics`
 
-Train yolov8 model via Python or Console:
+Put all images and labels inside the data folder and make sure that the different label classes are inside the yolov8_config.yaml
+
+Train yolov8 model via Python:
+`python src/train.py`
+
+Install googlepubsub to send data there:
+`pip install google-cloud-pubsub`
+
+Make sure to get an account json file and change the path in the predict_webcam.py
 
 #### Python
 Use the train.py file

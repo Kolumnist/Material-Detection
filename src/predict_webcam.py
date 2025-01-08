@@ -1,5 +1,7 @@
-import os
 from ultralytics import YOLO
+
+from google.cloud import pubsub_v1
+import os
 import cv2
 import math
 
@@ -7,8 +9,13 @@ cap = cv2.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\dev\personal\Material Detection\iot-usm-446702-4befce424c11.json"
+
+publisher = pubsub_v1.PublisherClient()
+topic_path = "projects/iot-usm-446702/topics/detection"
+
 # model
-model_path = os.path.join('..', 'runs', 'detect', 'train3', 'weights', 'last.pt')
+model_path = os.path.join('..', 'runs', 'detect', 'train6', 'weights', 'last.pt')
 model = YOLO(model_path)
 
 threshold = 0.5
@@ -32,12 +39,16 @@ while True:
             cls = int(box.cls[0])
             #print("Class name -->", classNames[cls].upper())
 
+            # Publish message
+            if cls == 0: publisher.publish(topic_path, classNames[cls].encode("utf-8"), type="paper")
+            elif cls == 1: publisher.publish(topic_path, classNames[cls].encode("utf-8"), type="plastic")
+
             # bounding box
             x1, y1, x2, y2 = box.xyxy[0]
             x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
 
             cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
-            cv2.putText(img, classNames[cls].upper(), [x1, y1], cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+            cv2.putText(img, classNames[cls].upper(), [160, 160], cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
     cv2.imshow('Webcam', img)
     if cv2.waitKey(1) == ord('q'):

@@ -1,7 +1,7 @@
 
 path: C:\dev\personal\Material Detection\data
 train: images/train
-val: images/train
+val: images/validate
 
 names: 
   0: paper
