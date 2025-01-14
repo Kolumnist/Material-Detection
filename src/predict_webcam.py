@@ -1,5 +1,5 @@
+import time
 from ultralytics import YOLO
-
 from google.cloud import pubsub_v1
 import os
 import cv2
@@ -9,16 +9,14 @@ cap = cv2.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
 
+# google
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:\dev\personal\Material Detection\iot-usm-446702-4befce424c11.json"
-
 publisher = pubsub_v1.PublisherClient()
 topic_path = "projects/iot-usm-446702/topics/detection"
 
 # model
 model_path = os.path.join('..', 'runs', 'detect', 'train6', 'weights', 'last.pt')
 model = YOLO(model_path)
-
-threshold = 0.5
 
 classNames = ["paper", "plastic"]
 
@@ -30,18 +28,16 @@ while True:
         boxes = result.boxes
 
         for box in boxes:
-            
+        
             confidence = math.ceil((box.conf[0]*100))/100
-            if confidence < threshold: break
-            #print("Confidence --->",confidence)
+            if confidence < 0.7 : break
 
-            # class name
+            #print("Confidence --->",confidence)
             cls = int(box.cls[0])
             #print("Class name -->", classNames[cls].upper())
 
             # Publish message
-            if cls == 0: publisher.publish(topic_path, classNames[cls].encode("utf-8"), type="paper")
-            elif cls == 1: publisher.publish(topic_path, classNames[cls].encode("utf-8"), type="plastic")
+            publisher.publish(topic_path, classNames[cls].encode("utf-8"), type=classNames[cls])
 
             # bounding box
             x1, y1, x2, y2 = box.xyxy[0]
