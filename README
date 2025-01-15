@@ -22,7 +22,16 @@ Train yolov8 model via Python:
 Install googlepubsub to send data there:
 `pip install google-cloud-pubsub`
 
-Make sure to get an account json file and change the path in the predict_webcam.py
+Make sure to get a service account json file from google console and change the path in the predict_webcam.py
+
+Next make sure to create a topic and fill in all the necessary data into the predict_webcam.py
+
+
+Currently using Http also tried using mqtt however pubsub doesnt like mqtt unless one uses a bridge.
+
+Also furthermore one could use Websockets. Use of API Cloud Functions also useful to acknowledge data that is received by subscription.
+
+There is too much I need hydration
 
 #### Python
 Use the train.py file

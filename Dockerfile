@@ -11,7 +11,7 @@ COPY . /app
 # Install necessary Python dependencies
 # Use Conda to create an environment and install dependencies.
 # Assuming you have a requirements.txt file for dependencies.
-RUN conda install --yes python=3.11
+RUN conda install --yes python=3.10
 
 RUN pip freeze > requirements.txt
     
@@ -20,6 +20,16 @@ RUN pip freeze > requirements.txt
 RUN conda clean --all -f -y
 
 # Install pytorch and stuff
+RUN conda install pytorch torchvision torchaudio cpuonly -c pytorch
+RUN conda install psycopg2
+
+# Dependencies for labelstudio
+RUN pip install fsspec
+RUN pip install sympy==1.13.1
+RUN pip install label-studio
+
+# Dependencies for kaggle dataset
+# conda install -n detection ipykernel --update-deps --force-reinstall
 
 
 # Add environment variables to support Miniconda

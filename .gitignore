@@ -1,2 +1,9 @@
 data/*
-runs/*
+runs/detect/*
+
+.vscode/*
+
+iot-usm-*
+subscriber*
+
+docker*
