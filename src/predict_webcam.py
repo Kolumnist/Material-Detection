@@ -15,7 +15,7 @@ publisher = pubsub_v1.PublisherClient()
 topic_path = "projects/iot-usm-446702/topics/detection"
 
 # model
-model_path = os.path.join('..', 'runs', 'detect', 'train6', 'weights', 'last.pt')
+model_path = os.path.join('..', 'runs', 'last.pt')
 model = YOLO(model_path)
 
 classNames = ["paper", "plastic"]
@@ -30,13 +30,11 @@ while True:
         for box in boxes:
         
             confidence = math.ceil((box.conf[0]*100))/100
-            if confidence < 0.7 : break
 
-            #print("Confidence --->",confidence)
+            if confidence < 0.8 : break
+            time.sleep(10)
             cls = int(box.cls[0])
-            #print("Class name -->", classNames[cls].upper())
 
-            # Publish message
             publisher.publish(topic_path, classNames[cls].encode("utf-8"), type=classNames[cls])
 
             # bounding box
