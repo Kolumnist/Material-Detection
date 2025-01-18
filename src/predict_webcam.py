@@ -17,6 +17,7 @@ topic_path = "projects/iot-usm-446702/topics/detection"
 # model
 model_path = os.path.join('..', 'runs', 'last.pt')
 model = YOLO(model_path)
+confidence_threshold = 0.8
 
 classNames = ["paper", "plastic"]
 
@@ -31,8 +32,7 @@ while True:
         
             confidence = math.ceil((box.conf[0]*100))/100
 
-            if confidence < 0.8 : break
-            time.sleep(10)
+            if confidence < confidence_threshold : break
             cls = int(box.cls[0])
 
             publisher.publish(topic_path, classNames[cls].encode("utf-8"), type=classNames[cls])
@@ -43,7 +43,7 @@ while True:
 
             cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
             cv2.putText(img, classNames[cls].upper(), [160, 160], cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-
+            time.sleep(0.1)
     cv2.imshow('Webcam', img)
     if cv2.waitKey(1) == ord('q'):
         break
