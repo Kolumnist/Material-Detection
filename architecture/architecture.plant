@@ -1,0 +1,40 @@
+@startuml
+!define RECTANGLE_COLOR #A7C7E7
+!define CIRCLE_COLOR #F4A460
+!define CLOUD_COLOR #B0C4DE
+!define DEVICE_COLOR #90EE90
+
+rectangle "Webcam and YOLO Detection Module" as WebcamDetectionModule <<RECTANGLE_COLOR>> {
+    rectangle "Webcam" as Webcam
+    rectangle "YOLO Model" as YOLO
+}
+
+cloud "Google Cloud Pub/Sub" as Cloud <<CLOUD_COLOR>> {
+    rectangle "Publisher" as Publisher
+    rectangle "Pub/Sub Topic" as Topic
+}
+
+rectangle "ESP32 Component" as ESP32 <<DEVICE_COLOR>> {
+    rectangle "HTTP Client" as HTTPClient
+    rectangle "Action Executor" as Executor
+    rectangle "MQTT Client" as MQTTClient
+}
+
+cloud "VOne(Data Analysis)" as VONE <<CLOUD_COLOR>> {
+    rectangle "MQTT Broker" as MQTTBroker
+    rectangle "Data Processing" as DataProcessing
+}
+
+Webcam --> YOLO : Captures Frame
+YOLO --> Publisher : Publishes Detection Results
+Publisher --> Topic : Sends Message
+
+Topic --> HTTPClient : HTTP POST (Delivers Message)
+HTTPClient --> Topic : HTTP POST (Acknowledges Message)
+HTTPClient --> Executor : Passes Data
+Executor --> "Performs Action" : Executes Command
+
+Executor --> MQTTClient : Passes Data
+MQTTClient --> MQTTBroker : Publishes Data via MQTT
+MQTTBroker --> DataProcessing : Processes and Analyzes Data
+@enduml
