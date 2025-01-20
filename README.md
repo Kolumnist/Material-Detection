@@ -101,3 +101,30 @@ Refer to documentation of VOne for details.
 Create device for Servo and Sensor. Send their data to VOne, create graphs to analyze data.
 
 Add VONE Library to sketch and change the IDs of the respective servo and sensor variable.
+
+### If all other prerequisites are done
+
+**Hardware**
+
+- HC-SRO4 on pins 41 and 42
+- LED on pin 7
+- Servo on pin 4
+- Connect ESP32 to laptop with working webcam
+
+**Cloud**
+
+If you have a Google Cloud Topic and Service Accounts set up follow the README under "Google PubSub Setup", for VONE follow the instructions in the README under "V-ONE Setup".
+
+For an Internet connection change variables in "wastemanagement_sketch.ino" line 32 and 33.
+
+If you only want to test the sensor and you don't want cloud, comment out every cloud related code inside "wastemanagement_sketch.ino" and upload it to the esp32. (The next step is not needed in this case)
+
+**Python and Webcam**
+
+First run "generate_authtoken.py" and copy-paste the result in your console into the "wastemanagement_sketch.ino" variable in line 25. It will only last for an hour, after this hour repeat this step.
+
+Then run "predict_webcam.py" a UI of your camera should pop-up and the detection is running.
+
+At this point upload "wastemanagement_sketch.ino" to the esp32 and dont forget to activate your wifi.
+
+This is all you need to run both the sensor and the detection.
