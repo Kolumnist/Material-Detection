@@ -22,7 +22,7 @@ const int anglePlastic = 180;
 // Google Cloud Pub/Sub
 const char* endpoint = "https://pubsub.googleapis.com/v1/projects/iot-usm-446702/subscriptions/detection-sub:pull";
 const char* ackEndpoint = "https://pubsub.googleapis.com/v1/projects/iot-usm-446702/subscriptions/detection-sub:acknowledge";
-String accessToken = "ya29.c.c0ASRK0GYuVoLdZkiUITN2KuZE0r3EncARthkCnVg2LFzLBcHEmzvV6irNnr8jqA4zNvKq2362JDLRu-GbtA5F27rfg_juOBFnRdEol66cxUHKg1t7DsqmHU2wiCr9de6AVs23szpK7a9fJh_RN1-0h3CTE4IEbDWSgPcmcIO02VSGusOC4t28bO69wShnai_O14Ax8pJRyZCvhHH-UNNn-JYlV1sbRRSt7sQRooZ9MrLACgxkRBmbjFnIpLr-y9qvBbAiTqQF2Ih2X-6pPxQ_x06yTzJ94a_cbG1vygClhlBEIAQJQCgr-AEOSQrICjQK5zuxu_F-ze6pHjpqZBTAFc878L6TONCbfDlV9Am7nVGDeFccY5FUp2_dT385Aear4r2reZ7ni3U4Qg36YoIJfk01s_nh4bmli9OVBhUjrbIBWbUtuMn6livYZc-yQbS04q4yxeaRty6jzS1ZIo06y1pd6bih663ldcV8SRmrfny_FIwl-WMiza9vb53mmz8M4Sx-41My-hepMehZ-o0770gO2y_nlz2M0yavai7B9zkpnWtcJgVsZdgg0eedt65zVbn24fjXhsV0xgjRxl_Oj7g57I-6_y6rJFbstrUs1s6-n9mc_tdY1RzXaRjX1Fb3wcjRYyOpwOvn6RhsRno7JMFfOtkI0QfaUjqtg4O78eBwzZ8Js-jQJqk0YYFwVRSnbhrm0VSZx2lstx2rR_zr-SccMV6v23WIfamanpF6xkuxa5gXRSu_mn5Vug3ixisvwQ3ce9WBM4BzmUp6bVy-fY5RiirrpqrvhMZuiZYixMuJreYmkzkmBUmMhIYjR_tVdfV8yIdenx0waVsgl8-i_9pirIQRzgozlvFiv49lhU3nc6buJ9uZqc2Isc98gniojUtfvvJoIpJJhRZ6xJmjZbwzcMbr0X77nM-hSz87m9nqd1zBYiF-rzj4thcR7wpXUbdvg3y14yqr1Wxsk7_UhkpXf6Rh3M7g6uVkWi0vvXgvgVkm63UfUhj";
+String accessToken = "ya29.c.c0ASRK0GYOvb_t0ofsK1g2iIUVMa01g4PtrtK3XbDu2wmHuq73YRwCroavjPX3zZ3di4Nd-CBOUbw-pSJOM95aSy6CDzSUp-8fc5yvKJhKvRkDofvk16RR57nvTlO7JSM8MtwpdlTS6O_4I_WM6kJ43tac3vgYMoTf9TlenmUip3JjgtvaB2IPq5CjUpXZrebkqupIwcNc2yuhAT66kmF5Z3YyWh_W6ts_7PUE-x2GowX45IsUUiMzRs4PU-7KIvkJuj6YZyqb2kodCs501aAsr-LTzyS8YWhbMw4y5bKJHZp276ooTxsBhvU1zjo5QTiPO5POlgGWby0KWW4M0beccFOVzEqxedbjlPViBvf0BJCqxLJwFBG3A5ErSwE387Ar7at-pWQJSBwh9rdc7QFZkcmzVxmrmiM0W70enb0t0FfM6mFVeaqw7R2Z6xMwUrIMcot14wc0haBqY6iXV63X3ZlR6X8aU5mjeuBMjXs9IxYU3thx5SYFkspY8ji3vJwBSoBb0Mfu1WBFIMcrqScO7dO0UkS3JdXtUm1W7W8fflevqjYyOemx5rjr-i0xbvZV3eXik9pbau8M52iBeial4t4IZW4WW1F-xSn-_8WRr-F0v4yjOBIq32kFJle6cQk-cne3X0IZWbpYSdgydFBgpe-3agV51fdMriaoh-Rd_p-ll8iB_Y3Rgw8schvtUxZVYBfcSnx-rhx9ooMMnVFlcZJdzZlRygzhg2Z4du-MBg1FYQxtussJI11cjhuhgbJeyvu4foWmhm4xJMiizzovyt6wjrznJdnnzI45MtYYkI0cfJQFWd3yU6gUjzYedigjbO9f9vd-nipgzVUMtJYcyFJyWkcfmdzke1RoFx2Zwn3g7Fmv2zUdrmXx3MphYZY0XrSh8JialFqXan6cOUfyefR6ewS81hRl9g6-Fh9Uk7XzpIgO8d3rcMcoFoFlaoB-dooVY12ujFyxv1mYSRe9liY1sc42nI-Qvq7FyZtctVpkgr4r558z1o0";
 
 // VOne
 VOneMqttClient voneClient;
@@ -67,7 +67,7 @@ void loop() {
   if (!voneClient.connected()) {
     voneClient.reconnect();
     voneClient.publishDeviceStatusEvent(Ultrasonic, true);
-    Serial.println();
+    Serial.println("");
   }
   voneClient.loop();
   measureWasteLevel();
@@ -77,15 +77,18 @@ void loop() {
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
-  String payload = R"({"maxMessages": 100})";
+  String payload = R"({"maxMessages": 1})";
   int httpCode = http.POST(payload);
 
   if (httpCode > 0) {
     String response = http.getString();
-    //Serial.println("Response: " + response);
-    
+    Serial.println("Response: " + response);
+    Serial.println("");
+
     JSONVar parsed = JSON.parse(response);
-    acknowledgeMessages(response);
+
+    JSONVar ackId = parsed["receivedMessages"][0]["ackId"];
+    acknowledgeMessage(ackId);
 
     JSONVar attributes = parsed["receivedMessages"][0]["message"]["attributes"];
     const char* type = (const char*)attributes["type"];
@@ -93,7 +96,7 @@ void loop() {
   }
   http.end();
 
-  delay(2000);
+  delay(1000);
 }
 
 void measureWasteLevel() {
@@ -104,10 +107,9 @@ void measureWasteLevel() {
     int sensorValue = -(WasteLevel.measureDistanceCm() - bin_depth);
     voneClient.publishTelemetryData(Ultrasonic, "Distance", sensorValue);
 
-    if (sensorValue >= (bin_depth * 0.8)) {
+    if (sensorValue >= (bin_depth * 0.7)) {
       digitalWrite(Red_LED, HIGH);
-    }
-    else {
+    } else {
       digitalWrite(Red_LED, LOW);
     }
   }
@@ -115,64 +117,38 @@ void measureWasteLevel() {
 
 void moveServo(const char* type) {
   Serial.println(type);
-    
-  if (strcmp((const char*)type, "paper") == 0)
-  {
+
+  if (strcmp((const char*)type, "paper") == 0) {
     servo.write(anglePaper);
-    delay(2000);
+    delay(3000);
     servo.write(angleNothing);
-  }
-  else if (strcmp((const char*)type, "plastic") == 0)
-  {
+  } else if (strcmp((const char*)type, "plastic") == 0) {
     servo.write(anglePlastic);
-    delay(2000);
+    delay(3000);
     servo.write(angleNothing);
-  }
-  else 
-  {
+  } else {
     servo.write(angleNothing);
   }
   voneClient.publishTelemetryData(cam, "Type", type);
 }
 
-void acknowledgeMessages(JSONVar response) {
+void acknowledgeMessage(String ackId) {
   HTTPClient http;
   http.begin(ackEndpoint);
+
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
-  JSONVar receivedMessages = response["receivedMessages"];
+  String payload = "{\"ackIds\": [\"" + ackId + "\"]}";
 
-  int totalMessages = receivedMessages.length();
-  String payload = "{\"ackIds\": [";
-  int batchCount = 0;
-
-  for (int i = 0; i < totalMessages; i++) {
-    String ackId = String((const char*)receivedMessages[i]["ackId"]);
-    
-    if (ackId.isEmpty()) {
-      Serial.println("Skipping invalid or empty ackId.");
-      continue;
-    }
-
-    if (batchCount > 0 && batchCount < totalMessages) payload += ", ";
-    payload += "\"" + ackId + "\"";
-    batchCount++;
-
-    // Send acknowledgment as batch
-    if (batchCount == 100 || i == totalMessages-1) {
-      payload += "]}";
-      int httpCode = http.POST(payload);
-
-      if (httpCode > 0) {
-        String response = http.getString();
-        Serial.println("Acknowledgment response:");
-        Serial.println(response);
-      } else {
-        Serial.print("Error on acknowledgment request: ");
-        Serial.println(http.errorToString(httpCode));
-      }
-    }
+  int httpCode = http.POST(payload);
+  if (httpCode > 0) {
+    String ackId = http.getString();
+    Serial.println("Acknowledgment response:");
+    Serial.println(ackId);
+  } else {
+    Serial.print("Error on acknowledgment request: ");
+    Serial.println(http.errorToString(httpCode));
   }
 
   http.end();

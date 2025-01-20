@@ -43,7 +43,7 @@ while True:
 
             cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
             cv2.putText(img, classNames[cls].upper(), [160, 160], cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-            time.sleep(0.1)
+    time.sleep(1)        
     cv2.imshow('Webcam', img)
     if cv2.waitKey(1) == ord('q'):
         break
