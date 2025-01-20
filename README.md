@@ -8,10 +8,6 @@
 - Arduino
 - ESP32
 
-## Quickstart
-
--
-
 ## Setup
 Setup from start to finish, refer to Quick Start if you only want the functionality as it is.
 

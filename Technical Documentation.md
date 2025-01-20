@@ -75,6 +75,6 @@ Unfortunately the system is not working at real-time as the detected object is f
 
 ## Links
 
-[github]()
+[GitHub](https://github.com/Kolumnist/Material-Detection)
 
-[video presentation]()
+[Video Presentation]()
