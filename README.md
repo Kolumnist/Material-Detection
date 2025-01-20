@@ -104,4 +104,4 @@ Refer to documentation of VOne for details.
 
 Create device for Servo and Sensor. Send their data to VOne, create graphs to analyze data.
 
-Add VONE Library to sketch
+Add VONE Library to sketch and change the IDs of the respective servo and sensor variable.
