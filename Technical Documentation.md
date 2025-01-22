@@ -49,4 +49,4 @@ Unfortunately the system is not working at real-time as the detected object is f
 
 [GitHub](https://github.com/Kolumnist/Material-Detection)
 
-[Video Presentation]()
+[Video Presentation](https://youtu.be/oSeENyNx8Qo)
